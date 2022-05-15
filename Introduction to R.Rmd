@@ -1,0 +1,141 @@
+---
+title: "Introduction to R"
+author: "clinton"
+date: "2/14/2022"
+output: html_document
+---
+
+R is an open source statistical programming language that is used for data wrangling, visualization and modelling. 
+Its an object oriented programming language.   
+
+## Basic arithmetic operations
+
+### Addition
+```{r}
+# use (#) to comment 
+# addition
+6 + 8
+
+```
+
+### multiplication 
+```{r}
+9 * 5
+```
+
+
+### Variables  
+Think of it like some sort of a container whose contents can change.    
+
+```{r}
+restaurant <- 87 # we use the assignment operator ( <- ) to assign values to variables
+restaurant # what's in our variable? 
+
+```
+
+You can change the contents of a variable 
+
+```{r}
+restaurant <- 56
+restaurant 
+```
+
+
+You can actually use objects/variables to perform arithmetic operations. For, imagine a vector with 1000 values, calling all that in order to manipulate the values is quite a task.  
+
+```{r}
+
+chefs <- 20
+
+all_chefs <- restaurant * chefs
+all_chefs
+```
+
+### Data structures  
+A particular way of organizing data in a computer so that it can be used effectively.
+
+#### Vector  
+Collection of elements mostly character, logical, integer or numeric.  
+
+```{r}
+# when dealing with more than one value we use (c) to combine the values into a vector. 
+stud_name <- c("Jack","Geddy","Jermin")
+stud_name
+```
+
+#### list    
+Collection of elements mostly of different data types.  
+
+```{r}
+makueni <- list(c("Agriculture","Education","FInance"),c(234,345,356))
+makueni
+```
+
+#### dataframe     
+A special type of list where every element of the list has same length (think of it as a rectangular list).   
+
+```{r}
+Makueni_subcounties <- data.frame(
+  subcounties = c("Makueni","Kaiti","Kilome"),
+  population = c(123,662453,735)
+)
+Makueni_subcounties
+```
+
+#### matrix    
+A set of numbers arranged in rows and columns so as to form a rectangular array.  
+Elements of a matrix must be of the same data type.   
+
+```{r}
+my_matrix <- matrix(c(1,2,3,4,5,6),ncol = 2,byrow = FALSE)
+my_matrix
+```
+ 
+#### Factors  
+
+In R, factors are used to work with categorical variables, variables that have a fixed and known set of possible values
+
+```{r}
+rating <- c( "low","low","high","low","high","medium","high")
+
+the_levels <- c("low", "medium", "high")
+
+rating_ordered <- factor(rating,levels = the_levels)
+
+```
+
+#### Data types
+##### Character  
+
+```{r}
+first_name <- "Clinton"
+first_name 
+typeof(first_name)
+```
+ 
+##### numeric
+```{r}
+typeof(restaurant)
+```
+ 
+##### complex
+```{r}
+complex_n <-3 + 4i
+complex_n
+typeof(complex_n)
+```
+ 
+##### logical data type
+```{r}
+yes <- TRUE
+typeof(yes)
+```
+ 
+ 
+ ## Assignment    
+ 
+ 1. Create a vector of counties 001 to 010, put the names into an object/variable and name it counties.       
+ 2. Create a vector of the populations of the above counties. Ensure the numbers align with the names of the counties. Put it into an object.variable called populations.     
+ 3. Using the above created objects, create a dataframe.    
+ 4. Create a factor object with all the months of the year arranged in order.     
+ 

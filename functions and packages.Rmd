@@ -1,0 +1,60 @@
+---
+title: "functions and packages"
+author: "clinton"
+date: "2/14/2022"
+output: html_document
+---
+
+ A function is a set of statements organized together to perform a specific function .
+ structure of a function 
+```{r}
+function_name <- function(arg_1,arg_2){
+  "Function body"
+}
+```
+ 
+```{r}
+my_name <- function(a,b){
+  combine <- paste(a,"-",b)
+  return(combine)
+  
+}
+```
+ 
+ 
+```{r}
+my_name(b="clinton",a="oyogo")
+```
+ 
+```{r}
+addition <- function(r,t,y){
+ c(r+t,t+y)
+}
+```
+ 
+```{r}
+addition(r = 7, t = 8, y = 2)
+```
+ mean
+```{r}
+makueni_population <- c("mak","3453","7456","8567")
+
+mean(makueni_population)
+
+typeof(makueni_population)
+
+makueni_population <- as.integer((makueni_population))
+
+typeof(makueni_population)
+
+mean(makueni_population)
+```
+ 
+ Packages
+```{r}
+#install.packages("ggplot2")
+
+library(ggplot2)
+```
+ 
+ 

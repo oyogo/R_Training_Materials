@@ -1,0 +1,142 @@
+---
+title: "Introduction to dplyr"
+author: "Jason"
+date: "2/14/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+# install install dplyr
+# install.packages("dplyr", deps=T)
+
+library(dplyr)
+```
+
+## dplyr verbs
+- select: pick variables based on column names.
+- filter: pick variables based on row values.
+- mutate: allows us to create new columns based on existing data
+- arrange: allows us to sort/order data variables
+- summarise: reduce values to a single summary
+- group_by: allows us to work on dataset in groups/categories.
+
+## Load data
+
+```{r load.data}
+crop.prod.df <- read.csv("data/cropprodandvalue_2015to19_tb1.csv")
+crop.prod.df
+```
+### Prepare dataset
+a vector header
+
+```{r header.col}
+header <- c(
+  "crop",
+  "prod.MT.2015",
+  "value.ksh.2015",
+  "prod.MT.2016",
+  "value.ksh.2016",
+  "prod.MT.2017",
+  "value.ksh.2017",
+  "prod.MT.2018",
+  "value.ksh.2018",
+  "prod.MT.2019",
+  "value.ksh.2019"
+)
+names(crop.prod.df) <- header
+crop.prod.df
+```
+
+```{r slice.rows}
+crop.prod.df[c(1, 2, 3, 4),]
+
+crop.prod.df[c(-1, -2, -3, -4), ]
+
+crop.prod.df <- crop.prod.df[c(-1, -2), ]
+crop.prod.df
+```
+
+```{r subcounty.col}
+
+crop.prod.df[2:8, "subcounty"] <- "Mbooni"
+crop.prod.df[10:16, "subcounty"] <- "Kilome"
+crop.prod.df[18:24, "subcounty"]  <- "Kaiti"
+
+crop.prod.df[, c("crop","subcounty")]
+
+
+```
+
+### dplyr verbs
+
+#### filter
+allows us to pick rows based on cell value
+
+```{r filter}
+filter(crop.prod.df, is.na(subcounty))
+
+crop.prod.df <- filter(crop.prod.df, !is.na(subcounty))
+crop.prod.df
+```
+
+#### relocate
+shift column positions
+
+```{r relocate}
+relocate(crop.prod.df, .before = 1, subcounty)
+
+crop.prod.df <- relocate(crop.prod.df, .after=1, subcounty)
+crop.prod.df
+```
+```{r chaining}
+crop.prod.df <- crop.prod.df %>% relocate(.before=1, subcounty)
+
+crop.prod.df
+```
+
+````{r num.conversion}
+val = "36,016"
+
+as.numeric( gsub(",", "", val))
+
+#mutate(crop.prod.df, prod.MT.2015 = gsub(",", "", prod.MT.2015))
+
+#mutate(crop.prod.df, prod.MT.2015 = as.numeric(gsub(",", "", prod.MT.2015)))
+
+to_numeric <- function(value){
+  as.numeric(gsub(",", "", value))
+}
+
+crop.prod.df.clean <- crop.prod.df %>%
+  filter_all(all_vars(. != "-")) %>%
+  mutate(
+    prod.MT.2015 = to_numeric(prod.MT.2015),
+    value.ksh.2015 = to_numeric(value.ksh.2015),
+    prod.MT.2016 = to_numeric(prod.MT.2016),
+    value.ksh.2016 = to_numeric(value.ksh.2016),
+    prod.MT.2017 = to_numeric(prod.MT.2017),
+    value.ksh.2017 = to_numeric(value.ksh.2017),
+    prod.MT.2018 = to_numeric(prod.MT.2018),
+    value.ksh.2018 = to_numeric(value.ksh.2018),
+    prod.MT.2019 = to_numeric(prod.MT.2019),
+    value.ksh.2019 = to_numeric(value.ksh.2019)
+  )
+
+crop.prod.df.clean
+````
+
+#### arrange
+sort/order column values
+```{r sort}
+# ascending
+crop.prod.df.clean %>% arrange(prod.MT.2015)
+
+# descending
+crop.prod.df.clean %>% arrange(desc(prod.MT.2015))
+```
+
+
+
+
