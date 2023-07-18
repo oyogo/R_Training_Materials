@@ -1,0 +1,139 @@
+---
+title: "Introduction to mapping with leaflet"
+output: html_notebook
+editor_options: 
+  chunk_output_type: inline
+---
+
+# Leaflet 
+
+leaflet is an open-source library used to create interactive maps. 
+With this library you can visualize your geospatial data easily. Given that the maps generated are interactive, we can embed them in R Markdown documents or Shiny web applications. 
+
+## Installation and loading libraries
+```{r}
+# To install it use: 
+#install.packages("leaflet") 
+#install.packages("sf")
+
+# To load the library into R session
+library(leaflet) # for creating maps and visualizing geospatial data
+library(sf) # for reading and manipulating vector data
+
+```
+
+
+# Brief about Spatial data
+
+Spatial data: data with spatial reference i.e they have coordinate values and a system of reference for the coordinates.
+
+There are two primary types of spatial data: 
+  - raster data
+  - vector data
+
+* Raster data: a type of spatial data that consists of a matrix of cells organized into rows and columns in which each cell represents specific information i.e temperature, pH, elevation etc.
+
+* Vector data: this is data that consists of sets of coordinate pairs (x , y) which are further categorized into 
+  - point (individual x, y locations i.e location of Khartoum university library)
+  - line (points that are connected i.e river)
+  - polygon (set of closed polylines i.e Sudan boundaries)
+
+
+# Creating a basic map 
+```{r}
+
+hosea <- leaflet() %>%
+  setView(lng = 31.44, lat = -27.18, zoom = 9) %>%
+  addTiles() %>% 
+  addMarkers(lng = 31.4405, lat = -27.1825, popup = "Some place in Hosea") %>%
+  addMiniMap()
+
+hosea
+```
+
+
+## importing spatial data into R
+*st_read()* function from *sf* library reads in the shapefiles into R. 
+*read.csv* base function (comes with R) is used to read in .csv files. 
+
+The type of data you can visualize on leaflet could be in the following formats: 
+* .csv   
+* .shp   
+* .json   
+* .tif   
+
+As long as it has location details
+
+## Working with .csv files.  
+
+```{r} 
+
+# import the csv file into R session   
+ldsf.plots <- read.csv("./data/ldsf_plotproperties.csv")   
+
+# inspect the data 
+str(ldsf.plots) 
+
+```
+
+Map the csv file using the Longitude and Latitude location details. 
+
+```{r}
+ldsf.sites <- leaflet() %>%
+  setView(lng = 31.4629694, lat = -26.5179414, zoom = 8) %>%
+  addTiles() %>% 
+  addMarkers(data = ldsf.plots,lng = ~Longitude, lat = ~Latitude) 
+
+ldsf.sites
+```
+
+
+## Add state boundaries 
+```{r}
+# read in the shapefile with state boundaries. 
+eswade.boundaries <- st_read("./data/shp/geoBoundaries-SWZ-ADM0.shp")
+
+#summary
+str(eswade.boundaries)
+```
+
+
+```{r}
+ldsf.sites <- leaflet() %>%
+  setView(lng = 31.4629694, lat = -26.5179414, zoom = 8) %>%
+  addTiles() %>% 
+  addMarkers(data = ldsf.plots,lng = ~Longitude, lat = ~Latitude) %>%
+  addPolygons(data = eswade.boundaries)
+
+ldsf.sites
+```
+
+## Add minimap 
+```{r}
+ldsf.sites <- leaflet() %>%
+  setView(lng = 31.4629694, lat = -26.5179414, zoom = 8) %>%
+  addTiles() %>% 
+  addMarkers(data = ldsf.plots,lng = ~Longitude, lat = ~Latitude) %>%
+  addPolygons(data = eswade.boundaries) %>% 
+  addMiniMap()
+
+ldsf.sites
+```
+
+## Interactive sessions on the browser (R Shiny context) 
+```{r} 
+
+ldsf.sites <- leaflet() %>%
+  setView(lng = 31.4629694, lat = -26.5179414, zoom = 8) %>%
+  addTiles() %>% 
+  addMarkers(data = ldsf.plots,
+             lng = ~Longitude, 
+             lat = ~Latitude, 
+             popup = paste("Site: ",ldsf.plots$Site)) %>%
+  addPolygons(data = eswade.boundaries) %>% 
+  addMiniMap()
+
+ldsf.sites
+
+```
+

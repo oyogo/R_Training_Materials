@@ -18,11 +18,12 @@ Its an object oriented programming language.
 
 ```
 
+
+
 ### multiplication 
 ```{r}
 9 * 5
 ```
-
 
 ### Variables  
 Think of it like some sort of a container whose contents can change.    
@@ -36,8 +37,13 @@ restaurant # what's in our variable?
 You can change the contents of a variable 
 
 ```{r}
-restaurant <- 56
+restaurant <- c(56,89,89)
 restaurant 
+```
+
+```{r}
+leaflet() %>%
+  addTiles()
 ```
 
 
@@ -67,19 +73,19 @@ stud_name
 Collection of elements mostly of different data types.  
 
 ```{r}
-makueni <- list(c("Agriculture","Education","FInance"),c(234,345,356))
-makueni
+eswatini <- list(c("Agriculture","Education","Finance"),c(234,345,356))
+eswatini
 ```
 
 #### dataframe     
 A special type of list where every element of the list has same length (think of it as a rectangular list).   
 
 ```{r}
-Makueni_subcounties <- data.frame(
-  subcounties = c("Makueni","Kaiti","Kilome"),
-  population = c(123,662453,735)
+eswatini_sites <- data.frame(
+  sites = c("Hosea","Kubuta","Ludzeludze"),
+  plots = c(12,66,75)
 )
-Makueni_subcounties
+eswatini_sites
 ```
 
 #### matrix    
@@ -96,11 +102,11 @@ my_matrix
 In R, factors are used to work with categorical variables, variables that have a fixed and known set of possible values
 
 ```{r}
-rating <- c( "low","low","high","low","high","medium","high")
+soil.levels <- c( "low","low","high","low","high","medium","high")
 
 the_levels <- c("low", "medium", "high")
 
-rating_ordered <- factor(rating,levels = the_levels)
+soil.levels.ordered <- factor(rating,levels = the_levels)
 
 ```
 

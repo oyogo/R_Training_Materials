@@ -5,7 +5,7 @@ date: "2/14/2022"
 output: html_document
 ---
 
- A function is a set of statements organized together to perform a specific function .
+ A function is a set of statements organized together to perform a specific task .
  structure of a function 
 ```{r}
 function_name <- function(arg_1,arg_2){
@@ -28,33 +28,42 @@ my_name(b="clinton",a="oyogo")
  
 ```{r}
 addition <- function(r,t,y){
- c(r+t,t+y)
+ r+t+y
 }
 ```
  
 ```{r}
 addition(r = 7, t = 8, y = 2)
 ```
- mean
+ 
+mean
 ```{r}
-makueni_population <- c("mak","3453","7456","8567")
+eswade_population <- c("mak","3453","7456","8567")
 
-mean(makueni_population)
+mean(eswade_population)
 
-typeof(makueni_population)
+typeof(eswade_population)
 
-makueni_population <- as.integer((makueni_population))
+eswade_population <- c(3453,7456,8567)
 
-typeof(makueni_population)
+typeof(eswade_population)
 
-mean(makueni_population)
+mean(eswade_population)
 ```
  
- Packages
+Packages
 ```{r}
+
 #install.packages("ggplot2")
 
 library(ggplot2)
+
 ```
  
- 
+Assignment
+Install *dplyr*  
+
+```{r}
+
+```
+
